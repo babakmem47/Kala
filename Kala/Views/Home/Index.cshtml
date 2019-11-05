@@ -6,8 +6,26 @@
 
 <div class="row voffset1">
     <div class="col-md-1 col-lg-1 col-xs-1"></div>
-    <div class="col-md-10 col-lg-10 col-xs-10">
-        سلام
+    <div id="mytext" class="col-md-10 col-lg-10 col-xs-10">
+        <div class="form-group has-search form-control-feedback">
+            <span class="fa fa-search search-icon"></span>
+            <input type="text" class="form-control" placeholder="جستجو...">
+        </div>
     </div>
+    <p></p>
+   
+    <span class="fa fa-search">s</span>
+    
     <div class="col-md-1 col-lg-1 col-xs-1"></div>
 </div>
+
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            //document.getElementById("mytext").innerHTML = "خداحافظ";
+        });
+    </script>
+}
