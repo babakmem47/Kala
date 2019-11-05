@@ -161,6 +161,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="EntityConfigurations\KalaConfiguration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -168,10 +169,15 @@
     <Compile Include="Migrations\201911050613408_InitialModel.Designer.cs">
       <DependentUpon>201911050613408_InitialModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911050708296_AddKalaAndFluentApi.cs" />
+    <Compile Include="Migrations\201911050708296_AddKalaAndFluentApi.Designer.cs">
+      <DependentUpon>201911050708296_AddKalaAndFluentApi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Kala.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -246,6 +252,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911050613408_InitialModel.resx">
       <DependentUpon>201911050613408_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911050708296_AddKalaAndFluentApi.resx">
+      <DependentUpon>201911050708296_AddKalaAndFluentApi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
