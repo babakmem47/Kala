@@ -24,7 +24,7 @@ namespace Kala
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/fontawesome.min.css",
+                      "~/css/font-awesome.min.css",
                       "~/Content/site.css"));
         }
     }
