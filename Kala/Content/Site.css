@@ -223,3 +223,11 @@ th {
 }
 
 /**/
+
+.bold {
+    font-weight: bold;
+}
+
+.ltrcell {
+    direction: ltr;
+}

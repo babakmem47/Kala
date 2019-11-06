@@ -60,9 +60,20 @@
         }
 
         $(document).ready(function () {
+            $("#searchInput").on('keyup',
+                function(e) {
+                    if (e.keyCode === 13) {
+                        //closeAllLists:
+                        var x = document.getElementsByClassName("autocomplete-items");
+                        for (var i = 0; i < x.length; i++) {
+                            //if (elmnt != x[i] && elmnt != inp) {
+                                x[i].parentNode.removeChild(x[i]);
+                        }
 
+                        ShowKalaAfterSelectedInSearchInput($("#searchInput").val());
+                    }
+                });
 
-            //document.getElementById("mytext").innerHTML = "خداحافظ";
         });
 
 

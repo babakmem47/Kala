@@ -10,7 +10,9 @@ namespace Kala
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/bootstrap.js",
-                        "~/Scripts/respond.js"
+                        "~/Scripts/respond.js",
+                        "~/Scripts/DataTables/jquery.dataTables.js",
+                        "~/Scripts/DataTables/dataTables.bootstrap.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -25,6 +27,7 @@ namespace Kala
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/css/font-awesome.min.css",
+                      "~/Content/DataTablea/css/dataTables.bootstrap.css",
                       "~/Content/site.css"));
         }
     }

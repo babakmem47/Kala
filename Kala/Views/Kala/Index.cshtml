@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-1 col-xs-1"></div>
+    <div class="col-lg-10 col-xs-10" align="center">
+        <h3>لیست کالا ها</h3>
+    </div>
+    <div class="col-lg-1 col-xs-1"></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-1 col-xs-1">
+        <button id="btnNewKala" class="btn btn-primary" data-toggle="modal" data-target="#kalaFormModal" title="افزودن کالا جدید" style="font-size:20px"><i class="fa fa-plus"></i></button>
+    </div>
+    <div class="col-lg-10 col-xs-10" align="right">
+    </div>
+    <div class="col-lg-1 col-xs-1"></div>
+</div>
+
+<div class="row voffset1">
+    <div class="col-lg-12 col-xs-12">
+        <table id="kalaTable" class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+            <tr>
+                <td>ردیف</td>
+                <td>نام</td>
+                <td>مدل</td>
+                <td>رنگ</td>
+                <td>تعداد</td>
+                <td class="bold">ویرایش | حذف</td>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            var kalaTable = $("#kalaTable");
+            var row = 1;
+            kalaTable.DataTable({
+                "pageLength": 30,
+
+                "oLanguage": {
+                    "sSearch": "جستجو  ",
+                    "sSearchPlaceholder": "یه چیزی بنویس ...",
+                    "sLengthMenu": "نمایش  _MENU_  رکورد در جدول",
+                    "decimal": "",
+                    "sEmptyTable": "هیچ داده قابل دسترسی در جدول یافت نشد",
+                    "sInfo": "نمایش _START_ تا _END_ از _TOTAL_ ورودی",
+                    "sInfoEmpty": "نمایش 0 تا 0 از صفر ورودی",
+                    "sInfoFiltered": "(فیلتر شده از _MAX_ کل ورودی ها)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "sLoadingRecords": "بارگذاری ...",
+                    "sProcessing": "پردازش ...",
+                    "sZeroRecords": "هیچ رکوردی که مطابقت داشته باشد یافت نشد",
+                    "oPaginate": {
+                        "sFirst": "اول",
+                        "sLast": "آخر",
+                        "sNext": "بعدی",
+                        "sPrevious": "قبلی"
+                    }
+                },
+
+                "sDom":
+                    "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+                        "<'row'<'col-sm-12'tr>>" +
+                        "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+                "columnDefs": [
+                    { "className": "text-center", "targets": "_all" }
+                ],
+
+                ajax: {
+                    url: "/api/kalas",
+                    dataSrc: ""
+                },
+
+                columns: [
+                    {
+                        data: "",
+                        orderable: false,
+                        render: function () {
+                            return row++;
+                        }
+                    },
+                    {
+                        data: "name"
+
+                    },
+                    {
+                        orderable: false,
+                        data: "model",
+                        className: "ltrcell"
+                    },
+                    {
+                        orderable: false,
+                        data: "color"
+                    },
+                    {
+                        orderable: false,
+                        data: "availableNumber"
+                    },
+                    {
+                        orderable: false,
+                        className: "text-left EditRemoveColumn",
+                        data: "id",
+                        render: function (data) {
+                            return "<a href='' class='link-open-edit-modal' data-toggle='modal' data-target='#individualFormModal' data-individual-id='" +
+                                data +
+                                "'><span class='glyphicon glyphicon-edit' title='... ویرایش'></span></a>" +
+                                "&nbsp;&nbsp;" +
+                                "<button class='btn-link js-delete' data-person-id='" +
+                                data +
+                                "'> " +
+                                "<span class='glyphicon glyphicon-remove' title='حذف'</span></button>";
+                        }
+                    }
+                    
+                ],
+                // DataTables has fully been initialized:
+                "initComplete": function (settings, json) {     // better to replicate below codes in "fnDrawCallback"
+                    $('.sorting_asc').removeClass('sorting_asc'); // remove sorting icon from ردیف
+
+                },
+
+                "fnDrawCallback": function () {
+
+                }
+            });
+        });
+
+    </script>
+}
