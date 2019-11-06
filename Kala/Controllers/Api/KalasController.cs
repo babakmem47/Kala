@@ -2,6 +2,7 @@
 using Kala.Models;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace Kala.Controllers.Api
 {
@@ -14,7 +15,7 @@ namespace Kala.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetKalas()
         {
             var kalas = _context.Kalas.ToList();
@@ -29,13 +30,30 @@ namespace Kala.Controllers.Api
             }));
         }
 
-        [HttpGet]
-        [Route("api/kalasnames")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/kalasnames")]
         public IHttpActionResult KalasNames()
         {
             var kalasnames = _context.Kalas.ToList().Select(k => k.Name);
 
             return Ok(kalasnames);
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/kalasbyname/{kalaname}")]
+        // use:  api/kalas/ساعت" for example in url
+        public IHttpActionResult GetKala(string kalaName)
+        {
+            var kala = _context.Kalas.SingleOrDefault(k => k.Name == kalaName);
+
+            if (kala != null)
+                return Ok(new { data = kala });
+            
+            //else return a list of kalas that their names contain the keyword:
+            var kalasThatNamesContainsKeyWord = _context.Kalas.ToList()
+                    .Where(k => k.Name.Contains(kalaName));
+
+            return Ok(kalasThatNamesContainsKeyWord);
         }
 
     }

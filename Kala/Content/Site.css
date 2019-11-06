@@ -78,7 +78,6 @@ textarea {
     float: right;
     text-align: right;
     margin: 2px -25px 0;
-    -webkit-box-shadow: none;
     box-shadow: none;
 }
 
@@ -173,7 +172,7 @@ th {
     text-align: right;
 }
 
-/* ------------ End of Right-To-Lefting ------------- */
+/* _______________ End of Right-To-Lefting _______________ */
 
 
 .navbar-inverse {

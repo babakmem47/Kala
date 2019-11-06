@@ -20,17 +20,48 @@
     <div class="col-md-1 col-lg-1 col-xs-1"></div>
 </div>
 
+<div class="row voffset1">
+    <div class="col-md-2 col-lg-2 col-xs-2"></div>
+    <div id="searchResultDiv" class="col-md-8 col-lg-8 col-xs-8">
+        <ul id="searchResultUl"></ul>
+    </div>
+    <div class="col-md-2 col-lg-2 col-xs-2"></div>
+
+</div>
+
 
 
 @section scripts
 {
     <script>
-        $(document).ready(function () {
-            $.getJSON("",
-                function(results) {
-                    
+        function ShowKalaAfterSelectedInSearchInput(stringSearch) {
+            console.log("string search: " + stringSearch);
+            $.getJSON("/api/kalasbyname/" + stringSearch,
+            //$.getJSON("/api/kalas",
+                function (results) {
+                    console.log("results: " + JSON.stringify(results));
+                    $("#searchResultUl").empty();
+                    $.each(results,
+                        function (i, item) {
+                            console.log(item);
+                            console.log("Id is: " + item.id + "   name is: " + item.name);
+                            var output = "<li>" +
+                                item.name +
+                                " " +
+                                item.model +
+                                " " +
+                                item.color +
+                                " " +
+                                item.availableNumber +
+                                "</li>";
+                            $("#searchResultUl").append(output);
+                        });
+                });
+        }
 
-                })
+        $(document).ready(function () {
+
+
             //document.getElementById("mytext").innerHTML = "خداحافظ";
         });
 
@@ -87,6 +118,7 @@
                             /*close the list of autocompleted values,
                             (or any other open lists of autocompleted values:*/
                             closeAllLists();
+                            ShowKalaAfterSelectedInSearchInput(this.getElementsByTagName("input")[0].value);
                         });
                         a.appendChild(b);
                         preferedItemsListThatShowed.push(i);
@@ -114,6 +146,7 @@
                             /*close the list of autocompleted values,
                             (or any other open lists of autocompleted values:*/
                             closeAllLists();
+                            ShowKalaAfterSelectedInSearchInput(this.getElementsByTagName("input")[0].value);
                         });
                         a.appendChild(b);
                         preferedItemsListThatShowed.push(i);
