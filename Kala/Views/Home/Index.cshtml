@@ -7,23 +7,19 @@
 <div class="row voffset1">
     <div class="col-md-1 col-lg-1 col-xs-1"></div>
     <div class="col-md-10 col-lg-10 col-xs-10">
-        
         <form autocomplete="off" method="post">
             <div class="form-group autocomplete">
                 <input id="searchInput"  type="text" class="form-control" placeholder="جستجو...">
             </div>
         </form>
-
     </div>
-
-
     <div class="col-md-1 col-lg-1 col-xs-1"></div>
 </div>
 
 <div class="row voffset1">
     <div class="col-md-2 col-lg-2 col-xs-2"></div>
     <div id="searchResultDiv" class="col-md-8 col-lg-8 col-xs-8">
-        <ul id="searchResultUl"></ul>
+        <ul class="kalas-ul" id="searchResultUl"></ul>
     </div>
     <div class="col-md-2 col-lg-2 col-xs-2"></div>
 
@@ -45,15 +41,15 @@
                         function (i, item) {
                             console.log(item);
                             console.log("Id is: " + item.id + "   name is: " + item.name);
-                            var output = "<li>" +
+                            var output = "<li> <div class='kala-name'>" +
                                 item.name +
-                                " " +
-                                item.model +
-                                " " +
-                                item.color +
-                                " " +
-                                item.availableNumber +
-                                "</li>";
+                                "</div><div class='kala-model'>" +
+                                $.trim(item.model) +
+                                "</div><div class='kala-color'>" +
+                                $.trim(item.color) +
+                                "</div><div class='kala-price'>" +
+                                $.trim(item.price) +
+                                "</div></li>";
                             $("#searchResultUl").append(output);
                         });
                 });

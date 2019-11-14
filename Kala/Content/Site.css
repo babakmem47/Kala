@@ -231,3 +231,70 @@ th {
 .ltrcell {
     direction: ltr;
 }
+
+/*align form control elements*/ 
+.form-inline .form-group {
+    vertical-align: text-top;
+}
+
+
+.field-validation-error {
+    color: red;
+}
+
+.input-validation-error {
+    border: red 2px solid;
+}
+
+.width80px {
+    width: 80px;
+}
+
+.width100px {
+    width: 100px;
+}
+
+.width160px {
+    width: 160px;
+}
+
+.width200px {
+    width: 200px;
+}
+
+.kalas-ul {             /* not display bullet for list */
+    list-style: none;
+}
+
+.kalas-ul > li {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.kalas-ul > li .kala-name {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.kalas-ul > li .kala-model {
+    position: absolute;
+    top: 0;
+    left: 150px;
+    text-transform: uppercase;
+}
+
+.kalas-ul > li .kala-color {
+    position: absolute;
+    top: 0;
+    left: 300px;
+}
+
+.kalas-ul > li .kala-price {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    background: red;
+    color: white;
+    text-align: center;
+    width: 60px;
+}

@@ -38,12 +38,69 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="kalaFormModal" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">ویرایش</h4>
+            </div>
+            <div class="modal-body">
+                <form id="kalaForm" method="post" class="form-inline" autocomplete="off">
+
+                    <div class="row">
+                        <div class="form-group form-inline width160px">
+                            <label for="Name">نام</label>
+                            <input class="form-control" data-val="true" data-val-maxlength="حداکثر 70 کاراکتر"
+                                   data-val-maxlength-max="70" data-val-required="پر کردن فیلد نام ضروری است"
+                                   id="Name" name="Name" type="text" value="" />
+                            <span class="field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                        </div>
+
+                        <div class="form-group form-inline width200px">
+                            <label for="Model">مدل</label>
+                            <input class="form-control ltrcell" data-val="true" data-val-maxlength="حداکثر 250 کاراکتر" data-val-maxlength-max="250" id="ColorModel" name="Model" type="text" value="" />
+                            <span class="field-validation-valid" data-valmsg-for="Model" data-valmsg-replace="true"></span>
+                        </div>
+                        
+                        <div class="form-group form-inline width100px">
+                            <label for="Color">رنگ</label>
+                            <input class="form-control" data-val="true" data-val-maxlength="حداکثر 20 کاراکتر" data-val-maxlength-max="20" id="Color" name="Color" type="text" value="" />
+                            <span class="field-validation-valid" data-valmsg-for="Color" data-valmsg-replace="true"></span>
+                        </div>
+                        
+                        <div class="form-group form-inline width80px">
+                            <label for="Count">تعداد</label>
+                            <input class="form-control ltrcell" data-val="true" data-val-maxlength="حداکثر 20 کاراکتر" data-val-maxlength-max="20" id="Count" name="Count" type="text" value="" />
+                            <span class="field-validation-valid" data-valmsg-for="Count" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    <input data-val="true" data-val-number="The field Id must be a number."
+                           data-val-required="The Id field is required." id="Id" name="Id" type="hidden" />
+                    <div class="modal-footer">
+                        <button type="button" id="saveButton" class="btn btn-primary">ذخیره</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- End of Modal -->
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/jqueryval")
+
     <script>
-        $(document).ready(function() {
+
+        $(document).ready(function () {
+
             var kalaTable = $("#kalaTable");
             var row = 1;
             kalaTable.DataTable({
@@ -108,18 +165,18 @@
                     },
                     {
                         orderable: false,
-                        data: "availableNumber"
+                        data: "count"
                     },
                     {
                         orderable: false,
                         className: "text-left EditRemoveColumn",
                         data: "id",
                         render: function (data) {
-                            return "<a href='' class='link-open-edit-modal' data-toggle='modal' data-target='#individualFormModal' data-individual-id='" +
+                            return "<a href='' class='link-open-edit-modal' data-toggle='modal' data-target='#kalaFormModal' data-kala-id='" +
                                 data +
                                 "'><span class='glyphicon glyphicon-edit' title='... ویرایش'></span></a>" +
                                 "&nbsp;&nbsp;" +
-                                "<button class='btn-link js-delete' data-person-id='" +
+                                "<button class='btn-link js-delete' data-kala-id='" +
                                 data +
                                 "'> " +
                                 "<span class='glyphicon glyphicon-remove' title='حذف'</span></button>";
@@ -137,7 +194,205 @@
 
                 }
             });
-        });
+
+            kalaTable.on("click",
+                ".js-delete",
+                function () {
+                    var delButton = $(this);
+                    var delbtn = this;
+                    console.log(delButton.closest("tr").attr);
+                    //console.log(delbtn.parent("tr"));
+                    var dialog = bootbox.dialog({
+                        title: 'تائید',
+                        message: "آیا مطمئن هستید که می خواهید این کالا " //+ " '" + + "' "
+                            + "حذف شود؟",
+                        buttons: {
+                            yes: {
+                                label: "حذف",
+                                className: 'btn-danger pull-left',
+                                callback: function () {
+                                    $.ajax({
+                                        url: "/api/deletekalas/" + delButton.attr("data-kala-id"),
+                                        method: "DELETE"
+                                    })
+                                        .done(function () {
+                                            var rowToBeDelete = delButton.parents("tr");
+                                            rowToBeDelete.fadeOut(200,
+                                                function () {
+                                                    table.row(rowToBeDelete).remove().draw();
+                                                });
+                                        })
+                                        .fail(function () {
+                                            alert("Something failed");
+                                        });
+                                }
+                            },
+                            no: {
+                                label: "خیر",
+                                className: 'btn-default btn-left-bootbox',
+                                callback: function () {
+                                    bootbox.hideAll();
+                                }
+                            }
+                        }
+                    });
+                });  // of click on datatable for delete
+
+
+            //// Click on + button (New kala) (Modal window) //////
+            $("#btnNewKala").click(function () {
+                console.log("new button clicked");
+                $("#kalaFormModal .modal-title").text("افزودن کالای جدید");
+
+                // Assign form control id value
+                $("#Id").val(0);
+
+                // Initialize value of form control for adding new record
+                $("#Name").val('');
+                $("#Name").attr("placeholder", "نام کالا...");
+                $("#Model").val('');
+                $("#Color").val('');
+                $("#Count").val('');
+            });
+
+            ////// Click on Edit button (Modal window) //////
+            kalaTable.on("click",
+                ".link-open-edit-modal",
+                function () {
+                    var editButton = $(this);
+
+                    // Assign form control values to selected record for editing
+                    $.ajax({
+                        url: "/api/kalas/" + editButton.attr("data-kala-id"),
+                        method: "GET"
+
+                    }).done(function (data) {
+                        console.log(data);
+                        $("#Id").val(data.id);
+                        $("#Name").val(data.name);
+                        $("#Model").val(data.model);
+                        $("#Color").val(data.color);
+                        $("#Mobile").val(data.mobile);
+                        $("#Count").val(data.count);
+
+                    }).fail(function (status) {
+                        alert("fail to real data");
+                        console.log(status);
+                    });
+                });
+
+            // hide validatin error when modal closed: because the error msg remain for other records when clicking on edit
+            $("#kalaFormModal").on('hidden.bs.modal',
+                function (e) {
+                    console.log("modal closed");
+                    $(".form-group > span").removeClass("field-validation-error").children("span").remove();
+                    $(".form-group > .form-control").removeClass("input-validation-error");
+                });
+
+            // make body page behind modal scrollable
+            $("#kalaFormModal").on("shown.bs.modal",
+                function () {
+                    $("body").removeClass("modal-open");
+                });
+
+            //make modal draggable
+            //$("#kalaFormModal").draggable({
+            //    handle: ".modal-header"
+            //});
+
+            // event in WorkPlace Modal
+            $("#WorkPlaceModal").on("shown.bs.modal",
+                function () {
+                    $("#NameOfWorkPlace").focus();
+                });
+
+            // when user close second modal, set focus on WorkPlaceName input
+            $("#WorkPlaceModal").on("hidden.bs.modal",
+                function () {
+                    $("#WorkPlaceName").focus();
+                });
+        
+            // move validation span under inputs
+            $(window).load(function () {
+                $("#kalaFormModal").on('shown.bs.modal',
+                    function () {
+                        //$(".form-group > span").addClass('newline');
+                        $(".form-group > span").css("display", "block"); // it is better(no need to .newline class)
+                        $("#Name").focus();
+                    });
+            });
+
+
+            $("#saveButton").click(function () {
+                var dataIsvalid = $("#kalaForm").valid();
+
+                if (dataIsvalid) {
+                    var formData = $("#kalaForm").serialize();
+                    console.log("Form Data: " + formData);
+
+                    var idOfForm = document.getElementById("kalaForm").Id.value;
+                    //console.log("idOfForm: " + idOfForm);
+
+                    if (idOfForm === '0') {     // New kala (id='0')
+                        //console.log("new record added");
+                        $.post("/api/kalas",
+                            formData,
+                            function (data, status) {
+                                $("#kalaFormModal").modal('hide');  // close modal
+                                row = 1;
+                                kalaTable.DataTable().ajax.reload();
+                                //location.reload();
+                            });
+                    } else {                    // Edit existing kala (id != '0')
+                        console.log("record updated");
+                        $.ajax({
+                            url: "/api/updatekalas/" + idOfForm,
+                            method: "PUT",
+                            data: formData,
+                            success: function (data, status) {
+                                //console.log("updated data result: " + data + "update status: " + status);
+                                //console.log('updated successfully');
+                                $("#kalaFormModal").modal('hide');  // close modal
+                                row = 1;
+                                kalaTable.DataTable().ajax.reload();
+                                //$('.modal-backdrop').remove();    // no need after using modal hide instead of toggle
+                            }
+                        });
+                    }
+
+
+                }
+
+            });
+
+
+            //////      Input Filter    ///////
+            function setInputFilter(textbox, inputFilter) {
+                ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(
+                    function (event) {
+                        textbox.addEventListener(event,
+                            function () {
+                                if (inputFilter(this.value)) {
+                                    this.oldValue = this.value;
+                                    this.oldSelectionStart = this.selectionStart;
+                                    this.oldSelectionEnd = this.selectionEnd;
+                                } else if (this.hasOwnProperty("oldValue")) {
+                                    this.value = this.oldValue;
+                                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                                }
+                            });
+                    });
+            }
+
+            // Set Filter for Count: Maximum 7 digit(only digit)
+            setInputFilter(document.getElementById("Count"),
+                function (value) {
+                    return /^\d*$/.test(value) && (value === "" || value.length <= 7);
+                });
+
+
+
+        });// Of document ready
 
     </script>
 }

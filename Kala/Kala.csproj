@@ -189,6 +189,14 @@
     <Compile Include="Migrations\201911050708296_AddKalaAndFluentApi.Designer.cs">
       <DependentUpon>201911050708296_AddKalaAndFluentApi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911091043082_RenameAvailableNumberToCount.cs" />
+    <Compile Include="Migrations\201911091043082_RenameAvailableNumberToCount.Designer.cs">
+      <DependentUpon>201911091043082_RenameAvailableNumberToCount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911111312100_AddDeletedPropToKala.cs" />
+    <Compile Include="Migrations\201911111312100_AddDeletedPropToKala.Designer.cs">
+      <DependentUpon>201911111312100_AddDeletedPropToKala.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -365,6 +373,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
@@ -516,6 +526,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911050708296_AddKalaAndFluentApi.resx">
       <DependentUpon>201911050708296_AddKalaAndFluentApi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911091043082_RenameAvailableNumberToCount.resx">
+      <DependentUpon>201911091043082_RenameAvailableNumberToCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111312100_AddDeletedPropToKala.resx">
+      <DependentUpon>201911111312100_AddDeletedPropToKala.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

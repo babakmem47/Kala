@@ -10,8 +10,10 @@
 
         public string Color { get; set; }
 
-        public short AvailableNumber { get; set; }
+        public short Count { get; set; }
 
         public int Price { get; set; }
+
+        public bool Deleted { get; set; }
     }
 }
