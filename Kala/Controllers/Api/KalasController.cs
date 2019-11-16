@@ -35,7 +35,7 @@ namespace Kala.Controllers.Api
         }
 
         [System.Web.Http.HttpGet]
-        // api/kalasname to get all names for autocomplete (except deleted)
+        // api/kalasnames to get all names for autocomplete (except deleted)
         [System.Web.Http.Route("api/kalasnames")]
         public IHttpActionResult KalasNames()
         {
